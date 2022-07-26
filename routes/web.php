@@ -12,27 +12,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//back office public
-Route::get('/', function () {
-    return view('welcome');
-});
 
-//back office authentication - public area
+// Backoffice - Area pubblica - auth
 Auth::routes();
 
-//set protected routes - back office private area
+// Backoffice - Area privata
 Route::middleware('auth')
-->namespace('Admin')
-->name('admin.')
-->prefix('admin')
-->group(function() {
+   ->namespace('Admin')
+   ->name('admin.')
+   ->prefix('admin')
+   ->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('posts', 'PostController');
     Route::resource('categories', 'CategoryController');
     Route::resource('tags', 'TagController');
 });
 
-//set otherwise route - front office
-Route::get('{any?}', function() {
-    return view('guest.home');
-})->where('any', '.*');
+// Front office
+Route::get("{any?}", function() {
+    return view("guest.home");
+})->where("any", ".*");
